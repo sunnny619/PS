@@ -13,3 +13,13 @@
 
 '''
 
+def solution(nums):
+    len_nums = len(nums)/2
+    nums = set(nums)
+    set_nums = len(nums)
+    
+    if set_nums > len_nums:
+        return len_nums
+    else:
+        return set_nums
+    
