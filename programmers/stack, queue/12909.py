@@ -10,6 +10,7 @@
 문자열 s는 '(' 또는 ')' 로만 이루어져 있습니다.
 """
 
+#  q에서 pop할때 비어있는지 확인 필수
 
 from collections import deque
 def solution(s):
