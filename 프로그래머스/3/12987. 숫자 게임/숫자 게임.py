@@ -1,15 +1,17 @@
 def solution(A, B):
     answer = 0
-    
     A.sort()
     B.sort()
     
-    pointer_A = 0
+    a_idx = 0  
+    b_idx = 0  
     
-    for pointer_B in range(len(B)):
-        if B[pointer_B] > A[pointer_A]:
+    while b_idx < len(B):
+        if B[b_idx] > A[a_idx]:
             answer += 1
-            pointer_A += 1
-    
-    
+            a_idx += 1  
+            b_idx += 1  
+        else:
+            b_idx += 1
+            
     return answer
