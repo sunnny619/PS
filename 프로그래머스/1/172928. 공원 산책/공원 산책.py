@@ -9,38 +9,32 @@ def solution(park, routes):
     for i in range(n):
         for j in range(m):
             if maps[i][j] == "S":
-                start = (i,j)
+                x, y = i,j
                 
-    def dest(op, temp):
-        x, y = temp
-        if op == "N":
-            new_x = x-1
-            new_y = y
-        if op == "S":
-            new_x = x+1
-            new_y = y
-        if op == "E":
-            new_x = x
-            new_y = y+1
-        if op == "W":
-            new_x = x
-            new_y = y-1
-        
-        return (new_x, new_y)
+    dirs = {
+        "N" : (-1,0),
+        "S" : (1, 0),
+        "E" : (0, 1),
+        "W" : (0, -1)
+    }
     
     for r in routes:
-        x, y = start
-        temp = (x, y)
-        
         op, num = r.split()
         num = int(num)
         
-        for i in range(num):
-            new_x, new_y = dest(op, temp)
-            if 0 <= new_x < n and 0 <= new_y < m and maps[new_x][new_y] != "X":
-                temp = (new_x, new_y)
+        dx, dy = dirs[op]
+        nx, ny = x, y
+        possible = True
+        for _ in range(num):
+            nx += dx
+            ny += dy
+            
+            if 0 <= nx < n and 0 <= ny < m and maps[nx][ny] != "X":
+                pass
             else:
-                temp = x, y
+                possible = False
                 break
-        start = temp
-    return start
+        if possible:
+            x, y = nx, ny
+            
+    return [x, y]
