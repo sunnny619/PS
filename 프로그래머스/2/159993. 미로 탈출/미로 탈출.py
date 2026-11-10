@@ -1,47 +1,47 @@
 from collections import deque
 def solution(maps):
-    answer = 0
-    maps = [list(row) for row in maps]
-    
     n = len(maps)
     m = len(maps[0])
+    dx = [-1, 1, 0 ,0]
+    dy = [0, 0 ,-1, 1]
     
+    level_count = 0
+    exit_cout = 0
     
+    level_start = (0,0)
+
     for i in range(n):
-        for j in range(m):
-            if maps[i][j] == "S":
-                start = (i,j)
-            if maps[i][j] == "L":
-                lever = (i,j)
-            if maps[i][j] == "E":
-                exit = (i, j)                
-        
-    dx = [0, 0, -1, 1]
-    dy = [-1, 1, 0, 0]
+            for j in range(m):
+                if maps[i][j] == "S":
+                    start = (i,j)
     
-    def road(target, start):
+    def bfs(start, target):
+        nonlocal level_start
         q = deque()
-        q.append(start)
-        grid = [[-1] * m for _ in range(n)]
-        grid[start[0]][start[1]] = 0
+        x, y = start
+        q.append((x, y))
+        board = [[-1]*m for _ in range(n)]
+        board[x][y] = 0
         while q:
             x, y = q.popleft()
-            if maps[x][y] == target:
-                return grid[x][y]
-            
             for i in range(4):
-                new_x = x+dx[i]
-                new_y = y+dy[i]
-                if 0 <=new_x < n and 0<= new_y < m and maps[new_x][new_y] != "X" and grid[new_x][new_y] == -1:
-                    q.append((new_x, new_y))
-                    grid[new_x][new_y] = grid[x][y] +1
+                nx = dx[i]+x
+                ny = dy[i]+y
+
+                if 0 <= nx < n and 0 <= ny < m and maps[nx][ny] != "X" and board[nx][ny] == -1:
+                    board[nx][ny] = board[x][y] +1
+                    if maps[nx][ny] == target:
+                        lever_count = board[nx][ny]
+                        level_start = (nx, ny)
+                        return lever_count
+                    q.append((nx,ny))
         return -1
     
-    lever_count = road("L", start)
+    lever_count = bfs(start, "L")
     if lever_count == -1:
         return -1
-    exit_count = road("E", lever)
+    exit_count = bfs(level_start, "E")
     if exit_count == -1:
         return -1
-    
+                    
     return lever_count+exit_count
