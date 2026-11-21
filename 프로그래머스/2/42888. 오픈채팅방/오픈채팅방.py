@@ -1,25 +1,22 @@
 def solution(record):
+    names = {}
     arr = []
-    name_list = {}
     answer = []
     for r in record:
-        if r[0] == "E" or r[0]=="C":
-            op, i, name = r.split()
-            
-            if op == "Enter":
-                name_list[i] = name
-                arr.append((i,op))
-            if op == "Change":
-                name_list[i] = name
-            
+        if r[0] == "L":
+            op, user_id = r.split()
+            arr.append((op, user_id))
         else:
-            op, i = r.split()
-            arr.append((i,op))
-        
-    for a in arr:
-        name = name_list.get(a[0], 0)
-        if a[1] == "Enter":
+            op, user_id, name = r.split()
+            names[user_id] = name
+            if op == "Enter":
+                arr.append((op, user_id))
+    
+    for op, user_id in arr:
+        name = names.get(user_id, 0)
+        if op == "Enter":
             answer.append(name+"님이 들어왔습니다.")
-        if a[1] == "Leave":
+        if op == "Leave":
             answer.append(name+"님이 나갔습니다.")
+
     return answer
